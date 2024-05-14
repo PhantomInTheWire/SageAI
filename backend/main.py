@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Response
 from fastapi.responses import FileResponse
-
-from apps.roadmap import generate_svg
+from apps.roadmap import generate_mermaid
+from mermaid.graph import Graph
+import mermaid as md
 
 app = FastAPI()
 
@@ -18,7 +19,10 @@ async def say_hello(name: str):
 
 @app.get("/code/{prompt}")
 async def get_svg(prompt: str, response: Response):
-    generate_svg(prompt)
-    response.headers["Content-Disposition"] = f"attachment; filename=backend/apps/file.svg"
+    code = generate_mermaid(prompt)
+    graph = Graph('flowchart', code)  # Create Graph object
+    mermaid_diagram = md.Mermaid(graph)  # Create Mermaid object
+    mermaid_diagram.to_svg('file.svg')  # Use to_svg() method
+    response.headers["Content-Disposition"] = f"attachment; filename=file.svg"
     response.headers["Content-Type"] = "image/svg+xml"
-    return FileResponse('backend/apps/file.svg', media_type="image/svg+xml")
+    return FileResponse('file.svg', media_type="image/svg+xml")

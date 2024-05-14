@@ -1,5 +1,6 @@
 from openai import OpenAI
 import mermaid as md
+# from mermaid_cli import Mermaid
 from mermaid.graph import Graph
 
 
@@ -44,8 +45,4 @@ def generate_roadmap(user_prompt):
     return completion.choices[0].message.content
 
 
-def generate_svg(prompt):
-    code = generate_mermaid(prompt)
-    graph = Graph('flowchart', code)  # Create Graph object
-    mermaid_diagram = md.Mermaid(graph)  # Create Mermaid object
-    mermaid_diagram.to_svg('file.svg')  # Use to_svg() method
+# def generate_svg(prompt):

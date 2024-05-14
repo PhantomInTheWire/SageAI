@@ -10,7 +10,7 @@ import axios from "axios";
 import mermaid from "mermaid";
 
 export default function RoadmapCreator() {
-    const BASE_URL = "http://127.0.0.1:8000/api";
+    const BASE_URL = "http://127.0.0.1:8000";
     const [textInput, setTextInput] = useState<string>("");
     const [roadmapResponse, setRoadmapResponse] = useState<string>("");
     const handleSubmit = (event: FormEvent) => {
@@ -19,7 +19,8 @@ export default function RoadmapCreator() {
         if (!textInp) return;
 
         axios
-            .get(`${BASE_URL}/code/`, { params: { prompt: textInp } })
+            // .get(`${BASE_URL}/code/`, { params: { prompt: textInp } })
+            .get(`${BASE_URL}/code/${textInp}`)
             .then((response) => {
                 setRoadmapResponse(response.data["ans"]);
                 // mermaid.initialize({

@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from apps import roadmap
+from apps.roadmap import generate_mermaid
 
 app = FastAPI()
 
@@ -16,4 +16,4 @@ async def say_hello(name: str):
 
 @app.get("/code/{prompt}")
 async def get_code(prompt: str):
-    return {"ans": roadmap.generate_mermaid(prompt)}
+    return {"ans": str(generate_mermaid(prompt))}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import homeImg from "@/assets/home.png";
 
 export default function Home() {
@@ -22,12 +23,12 @@ export default function Home() {
                         <span className="text-color2 font-semibold">work</span>.
                     </h2>
                 </div>
-                <a
+                <Link
                     className="bg-color2 px-6 py-3 font-semibold text-xl rounded-lg"
                     href="/tools"
                 >
                     Get Started!
-                </a>
+                </Link>
             </div>
         </main>
     );

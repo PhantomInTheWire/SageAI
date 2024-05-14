@@ -1,4 +1,5 @@
 
 # Virtual Environment
 venv
-__pycache__
+__pycache__/
+apps/file.svg

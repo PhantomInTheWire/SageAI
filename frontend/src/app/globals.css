@@ -6,6 +6,8 @@
     :root {
         --background: 234.71deg 39.53% 16.86%;
         --foreground: 52, 17%, 91%;
+        --color1: #1a1d3c;
+        --color2: #ff840d;
         /* --background: 52, 17%, 91%;
         --foreground: 234.71deg 39.53% 16.86%; */
 
@@ -106,9 +108,46 @@
     opacity: 1;
 }
 .text-color2 {
-    color: #ff840d;
+    color: var(--color2);
 }
 .bg-color2 {
-    background-color: #ff840d;
-    color: #1a1d3c;
+    background-color: var(--color2);
+    color: var(--color1);
+}
+
+.spinner {
+    animation: rotate 2s linear infinite;
+    z-index: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -25px 0 0 -25px;
+    width: 50px;
+    height: 50px;
+}
+.spinner .path {
+    stroke: var(--color2);
+    stroke-linecap: round;
+    animation: dash 1.5s ease-in-out infinite;
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash {
+    0% {
+        stroke-dasharray: 1, 150;
+        stroke-dashoffset: 0;
+    }
+    50% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -35;
+    }
+    100% {
+        stroke-dasharray: 90, 150;
+        stroke-dashoffset: -124;
+    }
 }

@@ -1,10 +1,16 @@
 
 # Virtual Environment
 venv
-__pycache__/
-apps/file.svg
 
+# Cache files
+__pycache__/*
 
+# Environment file
 .env
 
+# SVG File
+apps/file.svg
 file.svg
+
+# Generated Roadmaps
+/apps/generated/roadmaps

@@ -19,6 +19,11 @@ def generate_mermaid(user_prompt):
                         "Do not put anything inside a bracket in the final diagram like (DeFi) (Dapps) etc"
                         "Do not make the diagram horizontal or disconnected"
                         "Make the diagram as detailed and aligned to the original prompt as much as you can."
+                        """A simple expample for this is below, and make sure to follow the format:\n graph TD;
+    A["Learn A"] --> 
+    B["Understand B"];    
+    A --> 
+    C["Python", "Java", "Node.js", "PHP"];"""
              },
             {"role": "user", "content": prompt}
         ]

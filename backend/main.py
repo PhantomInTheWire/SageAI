@@ -39,7 +39,7 @@ async def get_svg(prompt: str, response: Response):
     code = generate_mermaid(prompt)
     code = remove_unnecessary_stuff(code)
 
-    new_img_path = f'{SVG_FOLDER}/{prompt.replace(' ', '_')}.svg'
+    new_img_path = f'{SVG_FOLDER}/file.svg'
     # save_code(code, new_img_path)
 
     graph = Graph('flowchart', code)
@@ -48,11 +48,11 @@ async def get_svg(prompt: str, response: Response):
     mermaid_diagram.to_svg(new_img_path)
     # response.headers["Content-Disposition"] = f"attachment; filename=backend/apps/generated/roadmaps/file.svg"
     # response.headers["Content-Type"] = "image/svg+xml"
-    return {"img-url": f"http://localhost:8000/code-img/{prompt.replace(' ', '_')}.svg"}
+    return {"img-url": f"http://localhost:8000/code-img/file.svg"}
 
 
 @app.get("/code-img/{prompt}")
 async def get_generated_img(prompt: str):
-    return FileResponse(f'{SVG_FOLDER}/{prompt.replace(' ', '_')}', media_type="image/svg+xml")
+    return FileResponse(f'{SVG_FOLDER}/file.svg', media_type="image/svg+xml")
 
 

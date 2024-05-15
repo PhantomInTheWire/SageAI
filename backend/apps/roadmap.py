@@ -1,7 +1,7 @@
 from openai import OpenAI
-import mermaid as md
+# import mermaid as md
 # from mermaid_cli import Mermaid
-from mermaid.graph import Graph
+# from mermaid.graph import Graph
 
 
 def generate_mermaid(user_prompt):
@@ -21,7 +21,7 @@ def generate_mermaid(user_prompt):
                         "DO NOT under any circumstances include ``` or put anything inside a"
                         " bracket inside the diagram like (DeFi), (Dapps) etc"
                         "Make the diagram as detailed and aligned to the original prompt as much as you can."
-                        """A simple expample for this is below, and make sure to follow the format:\n graph TD;
+                        """A simple example for this is below, and make sure to follow the format:\n graph TD;
     A["Learn A"] --> 
     B["Understand B"];    
     A --> 

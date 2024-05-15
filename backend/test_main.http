@@ -11,4 +11,4 @@ Accept: application/json
 ###
 
 GET http://127.0.0.1:8000/code/blockchain
-Accept: application/svg+xml
+Accept: application/json

@@ -21,6 +21,7 @@ def generate_mermaid(user_prompt):
                         "DO NOT under any circumstances include ``` or put anything inside a"
                         " bracket inside the diagram like (DeFi), (Dapps) etc"
                         "Make the diagram as detailed and aligned to the original prompt as much as you can."
+                        "Make sure the diagram is always continuous and connected"
                         """A simple example for this is below, and make sure to follow the format:\n graph TD;
     A["Learn A"] --> 
     B["Understand B"];    

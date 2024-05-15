@@ -17,7 +17,9 @@ def generate_mermaid(user_prompt):
                         "You only need to return the output Mermaid code block."
                         "Do not include any description, do not include the ```."
                         "Do not put anything inside a bracket in the final diagram like (DeFi) (Dapps) etc"
-                        "Do not make the diagram horizontal or disconnected"
+                        "Make sure that the diagram is well connected"
+                        "DO NOT under any circumstances include ``` or put anything inside a"
+                        " bracket inside the diagram like (DeFi), (Dapps) etc"
                         "Make the diagram as detailed and aligned to the original prompt as much as you can."
                         """A simple expample for this is below, and make sure to follow the format:\n graph TD;
     A["Learn A"] --> 

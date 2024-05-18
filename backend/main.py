@@ -54,5 +54,3 @@ async def get_svg(prompt: str, response: Response):
 @app.get("/code-img/{prompt}")
 async def get_generated_img(prompt: str):
     return FileResponse(f'{SVG_FOLDER}/file.svg', media_type="image/svg+xml")
-
-

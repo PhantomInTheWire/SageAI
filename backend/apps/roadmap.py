@@ -1,10 +1,10 @@
-import google.generativeai as genai
-import os
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 
 def generate_mermaid(user_prompt):
-    genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-    model = genai.GenerativeModel("gemini-pro")
+    # genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+
+    model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0)
 
     prompt = generate_roadmap(user_prompt)
 
@@ -49,24 +49,24 @@ def generate_mermaid(user_prompt):
         Create a top to bottom Mermaid graph for 
         """
                      )
-    ans = (model.generate_content(sys_prompt + prompt)).text
+    ans = (model.invoke(sys_prompt + prompt)).content
     # print(ans)
+
     return ans
 
 
 def generate_roadmap(user_prompt):
-    genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-
     sys_prompt = str(
         """
     You are an assistant to help students by generating detailed roadmaps. Make sure it is structured 
     and detailed Do not include anything other than the roadmap like Here's a roadmap or some other description 
-    outside the roadmap itself.
+    outside the roadmap itself. 
     """
     )
-    model = genai.GenerativeModel("gemini-pro")
-    ans = (model.generate_content(sys_prompt + user_prompt)).text
-    return str(ans)
+    model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0)
+    ans = (model.invoke(sys_prompt + user_prompt))
+    # print(ans)
+    return ans.content
 
 
 # print(generate_mermaid("lol"))

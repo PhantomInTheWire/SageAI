@@ -4,53 +4,29 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 def generate_mermaid(user_prompt):
     # genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
 
-    model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0)
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
 
     prompt = generate_roadmap(user_prompt)
 
     sys_prompt = str(
-        """You are a helpful assistant to help user build diagram with Mermaid. You only need to return the output 
-        Mermaid code block. Do not include any description, do not include the ```. Do not put anything inside a 
-        bracket in the final diagram like (DeFi) (Dapps) etc. Make sure 
-        that the diagram is well connected. DO NOT under any circumstances include ``` or put anything inside a 
-        bracket inside the diagram like (DeFi), (Dapps) etc. Make sure the diagram is always continuous and 
-        connected. instead of "Blockchain Technology (Cryptocurrencies)", simply say "Blockchain Technology" instead 
-        of "Smart Contracts (DApps)", use "Smart Contracts - Enable Decentralized Applications". A simple example for 
-        this is below, and make sure to follow the format:\n 
-        graph TD;
-        A["Learn A"] --> B["Understand B"];
-        A --> C["Python", "Java", "Node.js", "PHP"];
-        B --> C["Python", "Java", "Node"]
-        \n
-        Make sure the code doesn't have syntax like using spaces where they dont belong, 
-        always put them inside double quotes inside a pair of square bracket like this
-        ["MOST IMPORTANT"]. \n
-        Make sure it is nested properly instead of "
-        subgraph Foundational Knowledge;\n
-        Core Business Concepts["Finance", "Marketing", "Operations", "Strategy"];\n
-        Product Management Fundamentals["Ideation", "Discovery", "Validation"];\n
-        Agile Methodologies["Scrum", "Kanban", "Lean"];\n
-        end" it should be\n 
-        "subgraph Foundational Knowledge\n
-        CoreBusinessConcepts["Finance, Marketing, Operations, Strategy"]\n
-        ProductManagementFundamentals["Ideation, Discovery, Validation"]\n
-        AgileMethodologies["Scrum, Kanban, Lean"]\n
-        end
-"       \n
-        Also make sure to use arrows for instance use "-->" instead of "--"
-        Make sure to not put multiple items in a single node using commans instead of 
-        "Roadmap["Roadmap for Students"] --> Phase1["Exploration", "Identify interests, strengths, and academic goals"]"
-        use\n "Roadmap["Roadmap for Students"] --> Exploration\n
-        Roadmap --> IdentifyInterests\n
-        Roadmap --> AcademicGoals\n"
-        \n    
-        It is important that you follow all these instructions as the output will be used for
-        further python processing.
-        Create a top to bottom Mermaid graph for 
+        """You are a helpful assistant to help user build diagram with Mermaid. Think of a diagram that
+        would suit the given prompt well. Once you do that take a step back and analyse it for syntax issues
+        like missing commas or missing quotes. Write everything in camel case. Once you are sure there are no
+        errors and everything is according to format output only the mermaid codeblock.
+        Here is an example of what the output must look like: \n
+        ```
+        graph LR
+        A[Square Rect] -- Link text --> B((Circle))
+        A --> C(Round Rect)
+        B --> D{Rhombus}
+        C --> D
+        ```
+     
+    This is the given prompt: \n
         """
                      )
     ans = (model.invoke(sys_prompt + prompt)).content
-    # print(ans)
+    print(ans)
 
     return ans
 
@@ -63,7 +39,7 @@ def generate_roadmap(user_prompt):
     outside the roadmap itself. 
     """
     )
-    model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0)
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
     ans = (model.invoke(sys_prompt + user_prompt))
     # print(ans)
     return ans.content

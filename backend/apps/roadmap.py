@@ -1,55 +1,48 @@
-from openai import OpenAI
-# import mermaid as md
-# from mermaid_cli import Mermaid
-# from mermaid.graph import Graph
+from langchain_google_genai import ChatGoogleGenerativeAI
 
 
 def generate_mermaid(user_prompt):
-    client = OpenAI()
+    # genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
 
     prompt = generate_roadmap(user_prompt)
 
-    completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system",
-             "content": "You are an assistant to help user build diagram with Mermaid."
-                        "You only need to return the output Mermaid code block."
-                        "Do not include any description, do not include the ```."
-                        "Do not put anything inside a bracket in the final diagram like (DeFi) (Dapps) etc"
-                        "Make sure that the diagram is well connected"
-                        "DO NOT under any circumstances include ``` or put anything inside a"
-                        " bracket inside the diagram like (DeFi), (Dapps) etc"
-                        "Make the diagram as detailed and aligned to the original prompt as much as you can."
-                        """A simple example for this is below, and make sure to follow the format:\n graph TD;
-    A["Learn A"] --> 
-    B["Understand B"];    
-    A --> 
-    C["Python", "Java", "Node.js", "PHP"];"""
-             },
-            {"role": "user", "content": prompt}
-        ]
-    )
+    sys_prompt = str(
+        """You are a helpful assistant to help user build diagram with Mermaid. Think of a diagram that
+        would suit the given prompt well. Once you do that take a step back and analyse it for syntax issues
+        like missing commas or missing quotes. Write everything in camel case. Once you are sure there are no
+        errors and everything is according to format output only the mermaid codeblock.
+        Here is an example of what the output must look like: \n
+        ```
+        graph LR
+        A[Square Rect] -- Link text --> B((Circle))
+        A --> C(Round Rect)
+        B --> D{Rhombus}
+        C --> D
+        ```
+     
+    This is the given prompt: \n
+        """
+                     )
+    ans = (model.invoke(sys_prompt + prompt)).content
+    print(ans)
 
-    return completion.choices[0].message.content
+    return ans
 
 
 def generate_roadmap(user_prompt):
-    client = OpenAI()
-
-    completion = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system",
-             "content": "You are an assistant to help students by generating detailed roadmaps."
-                        "Make sure it is structured and detailed"
-                        "Do not include anything other than the roadmap like Here's a roadmap"
-                        " or some other description outside the roadmap itself"},
-            {"role": "user", "content": user_prompt}
-        ]
+    sys_prompt = str(
+        """
+    You are an assistant to help students by generating detailed roadmaps. Make sure it is structured 
+    and detailed Do not include anything other than the roadmap like Here's a roadmap or some other description 
+    outside the roadmap itself. 
+    """
     )
+    model = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0)
+    ans = (model.invoke(sys_prompt + user_prompt))
+    # print(ans)
+    return ans.content
 
-    return completion.choices[0].message.content
 
-
-# def generate_svg(prompt):
+# print(generate_mermaid("lol"))

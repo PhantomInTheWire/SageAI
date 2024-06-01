@@ -1,10 +1,11 @@
-from fastapi import FastAPI, Response
-from fastapi.responses import FileResponse
-from fastapi.middleware.cors import CORSMiddleware
-from apps.roadmap import generate_mermaid
-from mermaid.graph import Graph
 import mermaid as md
-from helper import remove_unnecessary_stuff, save_code
+from fastapi import FastAPI, Response
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+from mermaid.graph import Graph
+
+from apps.roadmap import generate_mermaid
+from helper import remove_unnecessary_stuff
 
 app = FastAPI()
 
@@ -20,7 +21,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-SVG_FOLDER = "apps/generated/roadmaps"
+SVG_FOLDER = "backend/apps/generated/roadmaps"
+
 
 @app.get("/")
 async def root():
@@ -33,20 +35,22 @@ async def say_hello(name: str):
 
 
 @app.get("/code/{prompt}")
-async def get_svg(prompt: str):
+async def get_svg(prompt: str, response: Response):
     code = generate_mermaid(prompt)
     code = remove_unnecessary_stuff(code)
 
-    new_img_path = f'{SVG_FOLDER}/{prompt.replace(" ", "_")}.svg'
+    new_img_path = f'{SVG_FOLDER}/file.svg'
     # save_code(code, new_img_path)
 
     graph = Graph('flowchart', code)
     mermaid_diagram = md.Mermaid(graph)
 
     mermaid_diagram.to_svg(new_img_path)
-    return {"img-url": f"http://localhost:8000/code-img/{prompt.replace(" ", "_")}"}
+    # response.headers["Content-Disposition"] = f"attachment; filename=backend/apps/generated/roadmaps/file.svg"
+    # response.headers["Content-Type"] = "image/svg+xml"
+    return {"img-url": f"http://localhost:8000/code-img/file.svg"}
+
 
 @app.get("/code-img/{prompt}")
 async def get_generated_img(prompt: str):
-    return FileResponse(f'{SVG_FOLDER}/{prompt.replace(" ", "_")}.svg')
-
+    return FileResponse(f'{SVG_FOLDER}/file.svg', media_type="image/svg+xml")

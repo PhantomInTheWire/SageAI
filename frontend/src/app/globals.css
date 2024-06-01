@@ -8,6 +8,7 @@
         --foreground: 52, 17%, 91%;
         --color1: #1a1d3c;
         --color2: #ff840d;
+        --white: #ecebe4;
         /* --background: 52, 17%, 91%;
         --foreground: 234.71deg 39.53% 16.86%; */
 
@@ -106,6 +107,10 @@
 
 .navlink.active {
     opacity: 1;
+}
+.bg-color1 {
+    background-color: var(--color1);
+    color: var(--white);
 }
 .text-color2 {
     color: var(--color2);

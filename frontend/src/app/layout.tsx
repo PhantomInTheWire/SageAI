@@ -13,7 +13,7 @@ const fontSans = FontSans({
 });
 
 export const metadata: Metadata = {
-    title: "SageAI",
+    title: "OracleAI",
     description: "Set of AI tools to help finish your work.",
 };
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import axios from "axios";
 import { NewWindowIcon } from "@/components/icons";
 
-export default function RoadmapCreator() {
+export default function PresentaionBuilder() {
     const BASE_URL = "http://127.0.0.1:8000";
     const [textInput, setTextInput] = useState<string>("");
     const [roadmapResponse, setRoadmapResponse] = useState<string>("");
@@ -26,7 +26,7 @@ export default function RoadmapCreator() {
     return (
         <div className="w-full flex flex-col items-center space-y-8 px-40">
             <h1 className="text-color2 text-3xl font-semibold">
-                Roadmap Creator
+                Presentation Builder
             </h1>
             <form
                 onSubmit={(e) => handleSubmit(e)}
@@ -34,7 +34,7 @@ export default function RoadmapCreator() {
             >
                 <input
                     type="text"
-                    placeholder="Frontend web development"
+                    placeholder="A beautiful presentation about blockchain"
                     value={textInput}
                     onChange={(e) => setTextInput(e.target.value)}
                     className="flex-grow bg-transparent outline-none"
@@ -44,7 +44,7 @@ export default function RoadmapCreator() {
                     type="submit"
                     className="py-1 px-3 bg-color2 rounded-xl font-medium"
                 >
-                    Create
+                    Build
                 </button>
             </form>
 
@@ -60,14 +60,16 @@ export default function RoadmapCreator() {
                             strokeWidth="5"
                         ></circle>
                     </svg>
-                    <h3 className="text-xl">Generating your Roadmap!</h3>
+                    <h3 className="text-xl">
+                        Generating an awesome presentation just for you!
+                    </h3>
                 </div>
             )}
 
             {roadmapResponse && !isLoadingSVG && (
                 <div className="flex flex-col bg-[#ffffff08] px-8 py-6 rounded-xl">
                     <h2 className="text-2xl">
-                        Your roadmap generated successfully!
+                        Your awesome presentation has been generated!
                     </h2>
                     <Link
                         className="flex gap-1 items-center mt-4 mx-auto py-1 px-3 bg-color2 rounded-xl font-medium text-xl"
